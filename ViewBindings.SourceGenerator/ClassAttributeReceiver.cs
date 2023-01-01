@@ -30,7 +30,7 @@ public class ClassAttributeReceiver : ISyntaxContextReceiver
         {
             foreach (var attribute in attributeList.Attributes)
             {
-                if (attribute.Name.ToString() == _expectedAttribute || attribute.Name.ToString() + "Attribute" == _expectedAttribute)
+                if (attribute.Name.ToString() == _expectedAttribute || attribute.Name + "Attribute" == _expectedAttribute)
                     return true;
             }
         }

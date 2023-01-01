@@ -5,9 +5,9 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewBindings.SourceGenerator.Demo", "ViewBindings.SourceGenerator.Demo\ViewBindings.SourceGenerator.Demo.csproj", "{9B090233-6174-4A3A-94D3-758763F4E7BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewBindings.SourceGenerator.Contracts", "src\ViewBindings.SourceGenerator.Contracts\ViewBindings.SourceGenerator.Contracts.csproj", "{A766795F-3622-4ABE-A552-74464B0AF030}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewBindings.SourceGenerator.Contracts", "ViewBindings.SourceGenerator.Contracts\ViewBindings.SourceGenerator.Contracts.csproj", "{A766795F-3622-4ABE-A552-74464B0AF030}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewBindings.SourceGenerator", "src\ViewBindings.SourceGenerator\ViewBindings.SourceGenerator.csproj", "{1615FF7E-DAB9-401C-9322-C132F9F2320F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewBindings.SourceGenerator", "ViewBindings.SourceGenerator\ViewBindings.SourceGenerator.csproj", "{1615FF7E-DAB9-401C-9322-C132F9F2320F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

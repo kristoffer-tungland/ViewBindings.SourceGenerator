@@ -11,7 +11,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBlock Text="Views" />
+        <TextBlock Text="Views" FontSize="20" />
         <ItemsControl Grid.Row="1" ItemsSource="{Binding Views}" /> 
     </Grid>
 </UserControl>

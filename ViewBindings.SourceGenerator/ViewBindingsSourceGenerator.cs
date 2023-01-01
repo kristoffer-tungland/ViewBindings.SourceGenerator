@@ -174,7 +174,7 @@ public class ViewBindingsSourceGenerator : ISourceGenerator
     {
         var statementSyntaxes = new List<StatementSyntax>();
 
-        foreach (var type in classesToRegister)
+        foreach (var type in classesToRegister.OrderBy(x => x.Name))
         {
             var attribute = type.GetAttributes().FirstOrDefault(x => x.AttributeClass?.Name == nameof(ViewBindingAttribute) || x.AttributeClass?.Name == nameof(ViewBindingAttribute).Replace("Attribute", ""));
             if (attribute is null)

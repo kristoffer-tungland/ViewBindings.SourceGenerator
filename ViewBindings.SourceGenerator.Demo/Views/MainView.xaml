@@ -12,6 +12,6 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <TextBlock Text="Views" FontSize="20" FontWeight="Bold" />
-        <ItemsControl Grid.Row="1" Margin="10" ItemsSource="{Binding Views}" /> 
+        <ItemsControl Grid.Row="1" Margin="10" ItemsSource="{Binding Views}" />
     </Grid>
 </UserControl>

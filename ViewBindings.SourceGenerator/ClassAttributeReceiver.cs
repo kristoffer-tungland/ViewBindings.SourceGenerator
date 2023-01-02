@@ -1,39 +1,41 @@
 ﻿using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using ViewBindings.SourceGenerator.Extensions;
+
 
 namespace ViewBindings.SourceGenerator;
 
 public class ClassAttributeReceiver : ISyntaxContextReceiver
 {
-    private readonly string _expectedAttribute;
-    public ClassAttributeReceiver(string expectedAttribute) => _expectedAttribute = expectedAttribute;
-
-    public List<INamedTypeSymbol> Classes { get; } = new();
+    public List<INamedTypeSymbol> ViewModels { get; } = new();
+    public List<INamedTypeSymbol> AllViews { get; } = new();
 
     public void OnVisitSyntaxNode(GeneratorSyntaxContext context)
     {
         if (context.Node is not ClassDeclarationSyntax classDeclarationSyntax)
             return;
 
-        if (!HasAttribute(classDeclarationSyntax))
-            return;
+        INamedTypeSymbol? classSymbol = null;
 
-        if (context.SemanticModel.GetDeclaredSymbol(classDeclarationSyntax) is not INamedTypeSymbol classSymbol)
-            return;
-
-        Classes.Add(classSymbol);
-    }
-    protected bool HasAttribute(ClassDeclarationSyntax classDeclarationSyntax)
-    {
-        foreach (var attributeList in classDeclarationSyntax.AttributeLists)
+        if (classDeclarationSyntax.Identifier.Text.EndsWith("View"))
         {
-            foreach (var attribute in attributeList.Attributes)
-            {
-                if (attribute.Name.ToString() == _expectedAttribute || attribute.Name + "Attribute" == _expectedAttribute)
-                    return true;
-            }
+            classSymbol = context.SemanticModel.GetDeclaredSymbol(classDeclarationSyntax) as INamedTypeSymbol;
+
+            if (classSymbol is null)
+                return;
+
+            AllViews.Add(classSymbol);
         }
-        return false;
+
+        if (!classDeclarationSyntax.HasViewBindingAttribute())
+            return;
+
+        classSymbol ??= context.SemanticModel.GetDeclaredSymbol(classDeclarationSyntax) as INamedTypeSymbol;
+
+        if (classSymbol is null)
+            return;
+
+        ViewModels.Add(classSymbol);
     }
 }

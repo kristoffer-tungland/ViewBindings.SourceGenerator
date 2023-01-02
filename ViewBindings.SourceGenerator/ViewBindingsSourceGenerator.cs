@@ -16,7 +16,7 @@ public class ViewBindingsSourceGenerator : ISourceGenerator
 {
     public void Initialize(GeneratorInitializationContext context)
     {
-        context.RegisterForSyntaxNotifications(() => new ClassAttributeReceiver(nameof(ViewBindingAttribute)));
+        context.RegisterForSyntaxNotifications(() => new ClassAttributeReceiver());
     }
 
     public void Execute(GeneratorExecutionContext context)
@@ -26,17 +26,15 @@ public class ViewBindingsSourceGenerator : ISourceGenerator
 #endif
         if (context.SyntaxContextReceiver is not ClassAttributeReceiver receiver)
             return;
-
-        // Get all types with the "ViewBinding" attribute
-        var classesToRegister = receiver.Classes;
+        
         var @namespace = GetNamespace(context);
         
-        var source = GenerateCompositionRoot(@namespace+".Resources", classesToRegister);
+        var source = GenerateCompositionRoot(@namespace+".Resources", receiver.ViewModels, receiver.AllViews);
         var sourceText = source.ToFullString();
         context.AddSource("GeneratedViewBindings.g.cs", SourceText.From(sourceText, Encoding.UTF8));
     }
 
-    CompilationUnitSyntax GenerateCompositionRoot(string @namespace, List<INamedTypeSymbol> classesToRegister)
+    CompilationUnitSyntax GenerateCompositionRoot(string @namespace, IEnumerable<INamedTypeSymbol> viewModelTypes, List<INamedTypeSymbol> allViewTypes)
     {
         var compilationUnit = SyntaxFactory.CompilationUnit()
             .WithUsings(
@@ -86,7 +84,7 @@ public class ViewBindingsSourceGenerator : ISourceGenerator
                                                 SyntaxFactory.TokenList(
                                                     SyntaxFactory.Token(SyntaxKind.PublicKeyword)))
                                             .WithBody(
-                                                SyntaxFactory.Block(DataTemplatesToAdd(classesToRegister))),
+                                                SyntaxFactory.Block(DataTemplatesToAdd(viewModelTypes, allViewTypes))),
                                         SyntaxFactory.MethodDeclaration(
                                             SyntaxFactory.PredefinedType(
                                                 SyntaxFactory.Token(SyntaxKind.VoidKeyword)),
@@ -170,22 +168,36 @@ public class ViewBindingsSourceGenerator : ISourceGenerator
         return compilationUnit;
     }
 
-    static SyntaxList<StatementSyntax> DataTemplatesToAdd(List<INamedTypeSymbol> classesToRegister)
+    SyntaxList<StatementSyntax> DataTemplatesToAdd(IEnumerable<INamedTypeSymbol> viewModelTypes, List<INamedTypeSymbol> allViewTypes)
     {
         var statementSyntaxes = new List<StatementSyntax>();
 
-        foreach (var type in classesToRegister.OrderBy(x => x.Name))
+        foreach (var type in viewModelTypes.OrderBy(x => x.Name))
         {
             var attribute = type.GetAttributes().FirstOrDefault(x => x.AttributeClass?.Name == nameof(ViewBindingAttribute) || x.AttributeClass?.Name == nameof(ViewBindingAttribute).Replace("Attribute", ""));
             if (attribute is null)
                 throw new ArgumentNullException(nameof(ViewBindingAttribute), "ViewBindingAttribute was not found on type");
 
+            INamedTypeSymbol? viewTypeSymbol = null;
             var namedArguments = attribute.NamedArguments;
 
-            var viewTypeArgument = namedArguments.FirstOrDefault(arg => arg.Key == nameof(ViewBindingAttribute.ViewType));
+            // Check if the view is specified on argument
+            if (!namedArguments.IsEmpty && namedArguments.FirstOrDefault(arg => 
+                    arg.Key == nameof(ViewBindingAttribute.ViewType)) is {} viewTypeArgument)
+            {
+                if (viewTypeArgument.Value.Kind != TypedConstantKind.Error)
+                    viewTypeSymbol = viewTypeArgument.Value.Value as INamedTypeSymbol;
+            }
 
-            if (viewTypeArgument.Value.Value is not INamedTypeSymbol viewTypeSymbol)
-                throw new ArgumentNullException(nameof(ViewBindingAttribute.ViewType), "View type was not set");
+            // Try to get a view from naming convention
+            if (viewTypeSymbol is null)
+            {
+                var expectedView = type.Name.Replace("ViewModel", "View");
+                viewTypeSymbol = allViewTypes.FirstOrDefault(x => x.Name == expectedView);
+            }
+
+            if (viewTypeSymbol is null) 
+                throw new InvalidOperationException("View was not found");
 
             var viewModelTypesAndNamespaces = GetNameAndContainingTypesAndNamespaces(type);
             var viewTypesAndNamespaces = GetNameAndContainingTypesAndNamespaces(viewTypeSymbol);

@@ -18,9 +18,9 @@ namespace ViewBindings.SourceGenerator.Demo.Views
     /// <summary>
     /// Interaction logic for View1.xaml
     /// </summary>
-    public partial class View1 : UserControl
+    public partial class FirstView : UserControl
     {
-        public View1()
+        public FirstView()
         {
             InitializeComponent();
         }

@@ -11,10 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewBindings.SourceGenerato
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C95038C1-5DCB-4B25-8C06-7C656C07D770}"
 	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewBindings.SourceGenerator.Tests", "ViewBindings.SourceGenerator.Tests\ViewBindings.SourceGenerator.Tests.csproj", "{877654F7-B165-4C2D-9346-A6E8EA408188}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewBindings.SourceGenerator.Tests", "ViewBindings.SourceGenerator.Tests\ViewBindings.SourceGenerator.Tests.csproj", "{877654F7-B165-4C2D-9346-A6E8EA408188}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

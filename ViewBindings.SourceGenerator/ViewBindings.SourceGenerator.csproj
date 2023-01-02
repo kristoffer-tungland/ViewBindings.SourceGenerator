@@ -11,7 +11,7 @@
     <Authors>Kristoffer Tungland</Authors>
     <Company>COWI</Company>
     <PackageDescription>Creates Resource Dictionary with DataTemplates for view models and it's view</PackageDescription>
-    <RepositoryUrl></RepositoryUrl>
+    <RepositoryUrl>https://github.com/kristoffer-tungland/ViewBindings.SourceGenerator</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild><!-- Generates a package at build -->
     <IncludeBuildOutput>true</IncludeBuildOutput><!-- Do not include the generator as a lib dependency -->
     <!--<PackageReadmeFile>README.md</PackageReadmeFile>-->

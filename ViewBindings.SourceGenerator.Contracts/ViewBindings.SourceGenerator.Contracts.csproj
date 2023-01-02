@@ -11,9 +11,8 @@
     <Authors>Kristoffer Tungland</Authors>
     <Company>COWI</Company>
     <PackageDescription>Contains attriubutes to use with ViewBindings.SourceGenerator</PackageDescription>
-    <RepositoryUrl></RepositoryUrl>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <!-- Generates a package at build -->
+    <RepositoryUrl>https://github.com/kristoffer-tungland/ViewBindings.SourceGenerator</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild><!-- Generates a package at build -->
   </PropertyGroup>
 
 </Project>

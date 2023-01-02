@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
     <Authors>Kristoffer Tungland</Authors>
     <Company>COWI</Company>
     <PackageDescription>Creates Resource Dictionary with DataTemplates for view models and it's view</PackageDescription>

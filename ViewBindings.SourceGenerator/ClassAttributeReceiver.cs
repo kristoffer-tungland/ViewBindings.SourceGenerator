@@ -8,7 +8,7 @@ namespace ViewBindings.SourceGenerator;
 
 public class ClassAttributeReceiver : ISyntaxContextReceiver
 {
-    public List<INamedTypeSymbol> ViewModels { get; } = new();
+    public List<INamedTypeSymbol?> ViewModels { get; } = new();
     public List<INamedTypeSymbol> AllViews { get; } = new();
 
     public void OnVisitSyntaxNode(GeneratorSyntaxContext context)

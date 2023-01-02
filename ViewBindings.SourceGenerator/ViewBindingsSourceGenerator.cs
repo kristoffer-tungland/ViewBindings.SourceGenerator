@@ -9,6 +9,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using ViewBindings.SourceGenerator.Attributes;
 using ViewBindings.SourceGenerator.Exceptions;
+using ViewBindings.SourceGenerator.Extensions;
 
 namespace ViewBindings.SourceGenerator;
 
@@ -38,14 +39,18 @@ public class ViewBindingsSourceGenerator : ISourceGenerator
         }
         catch (ViewNotFoundException viewNotFoundException)
         {
-            var descriptor = new DiagnosticDescriptor("CW404", "Suitable view not found for view model", "Implement IDisposable on '{0}' because it creates members of the following IDisposable types: '{1}'.", "ViewBindings", DiagnosticSeverity.Error, true);
-            context.ReportDiagnostic(Diagnostic.Create(descriptor, viewNotFoundException.ViewModelType..GetLocation()));
+            var descriptor = new DiagnosticDescriptor("CS0103", "Suitable view not found for view model", viewNotFoundException.Message , "ViewBindings", DiagnosticSeverity.Error, true);
+            context.ReportDiagnostic(Diagnostic.Create(descriptor, viewNotFoundException.Location));
+        }
+        catch (GeneratorException generatorException)
+        {
+            var descriptor = new DiagnosticDescriptor("CS8603", "Generator exception", generatorException.Message, "Exception", DiagnosticSeverity.Error, true);
+            context.ReportDiagnostic(Diagnostic.Create(descriptor, generatorException.Location));
+
         }
     }
 
-    
-
-    CompilationUnitSyntax GenerateCompositionRoot(string @namespace, IEnumerable<INamedTypeSymbol> viewModelTypes, List<INamedTypeSymbol> allViewTypes)
+    static CompilationUnitSyntax GenerateCompositionRoot(string @namespace, IEnumerable<INamedTypeSymbol?> viewModelTypes, IReadOnlyCollection<INamedTypeSymbol> allViewTypes)
     {
         var compilationUnit = SyntaxFactory.CompilationUnit()
             .WithUsings(
@@ -196,7 +201,7 @@ public class ViewBindingsSourceGenerator : ISourceGenerator
         return compilationUnit;
     }
 
-    SyntaxList<StatementSyntax> DataTemplatesToAdd(IEnumerable<INamedTypeSymbol> viewModelTypes, List<INamedTypeSymbol> allViewTypes)
+    static SyntaxList<StatementSyntax> DataTemplatesToAdd(IEnumerable<INamedTypeSymbol?> viewModelTypes, IReadOnlyCollection<INamedTypeSymbol> allViewTypes)
     {
         var statementSyntaxes = new List<StatementSyntax>();
 
@@ -204,7 +209,7 @@ public class ViewBindingsSourceGenerator : ISourceGenerator
         {
             var attribute = viewModelType.GetAttributes().FirstOrDefault(x => x.AttributeClass?.Name == nameof(ViewBindingAttribute) || x.AttributeClass?.Name == nameof(ViewBindingAttribute).Replace("Attribute", ""));
             if (attribute is null)
-                throw new ArgumentNullException(nameof(ViewBindingAttribute), "ViewBindingAttribute was not found on type");
+                throw new GeneratorException(viewModelType, $"{nameof(ViewBindingAttribute)} was not found on view model");
 
             INamedTypeSymbol? viewTypeSymbol = null;
             var namedArguments = attribute.NamedArguments;
@@ -220,7 +225,7 @@ public class ViewBindingsSourceGenerator : ISourceGenerator
             // Try to get a view from naming convention
             if (viewTypeSymbol is null)
             {
-                var expectedView = viewModelType.Name.Replace("ViewModel", "View");
+                var expectedView = viewModelType.CalculateViewName();
                 viewTypeSymbol = allViewTypes.FirstOrDefault(x => x.Name == expectedView);
             }
 
@@ -280,6 +285,6 @@ public class ViewBindingsSourceGenerator : ISourceGenerator
         if (@namespace is not null)
             return @namespace;
 
-        throw new NotSupportedException("Unable to calculate namespace");
+        throw new GeneratorException(null, "Unable to calculate namespace");
     }
 }

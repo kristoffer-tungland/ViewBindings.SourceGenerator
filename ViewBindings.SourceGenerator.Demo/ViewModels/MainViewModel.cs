@@ -11,5 +11,6 @@ public class MainViewModel
     public MainViewModel()
     {
         Views.Add(new FirstViewModel());
+        Views.Add(new SecondViewModel());
     }
 }

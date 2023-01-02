@@ -8,6 +8,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using ViewBindings.SourceGenerator.Attributes;
+using ViewBindings.SourceGenerator.Exceptions;
 
 namespace ViewBindings.SourceGenerator;
 
@@ -38,7 +39,7 @@ public class ViewBindingsSourceGenerator : ISourceGenerator
         catch (ViewNotFoundException viewNotFoundException)
         {
             var descriptor = new DiagnosticDescriptor("CW404", "Suitable view not found for view model", "Implement IDisposable on '{0}' because it creates members of the following IDisposable types: '{1}'.", "ViewBindings", DiagnosticSeverity.Error, true);
-            context.ReportDiagnostic(Diagnostic.Create(descriptor, viewNotFoundException.GetLocation()));
+            context.ReportDiagnostic(Diagnostic.Create(descriptor, viewNotFoundException.ViewModelType..GetLocation()));
         }
     }
 

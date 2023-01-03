@@ -201,7 +201,7 @@ public class ViewBindingsSourceGenerator : ISourceGenerator
         return compilationUnit;
     }
 
-    static SyntaxList<StatementSyntax> DataTemplatesToAdd(IEnumerable<INamedTypeSymbol?> viewModelTypes, IReadOnlyCollection<INamedTypeSymbol> allViewTypes)
+    static SyntaxList<StatementSyntax> DataTemplatesToAdd(IEnumerable<INamedTypeSymbol> viewModelTypes, IReadOnlyCollection<INamedTypeSymbol> allViewTypes)
     {
         var statementSyntaxes = new List<StatementSyntax>();
 

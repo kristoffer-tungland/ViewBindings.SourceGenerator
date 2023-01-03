@@ -14,7 +14,7 @@
     <RepositoryUrl>https://github.com/kristoffer-tungland/ViewBindings.SourceGenerator</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild><!-- Generates a package at build -->
     <IncludeBuildOutput>true</IncludeBuildOutput><!-- Do not include the generator as a lib dependency -->
-    <!--<PackageReadmeFile>README.md</PackageReadmeFile>-->
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <DevelopmentDependency>true</DevelopmentDependency>
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
@@ -23,6 +23,7 @@
   <ItemGroup>
     <!-- Package the generator in the analyzer directory of the nuget package -->
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="..\README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
   <ItemGroup>

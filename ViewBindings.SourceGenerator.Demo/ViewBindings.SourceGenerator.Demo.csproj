@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ViewBindings.SourceGenerator.Contracts\ViewBindings.SourceGenerator.Contracts.csproj" />
     <ProjectReference Include="..\ViewBindings.SourceGenerator\ViewBindings.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 

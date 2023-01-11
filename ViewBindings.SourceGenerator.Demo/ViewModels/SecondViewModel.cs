@@ -1,4 +1,4 @@
-﻿using ViewBindings.SourceGenerator.Contracts.Attributes;
+﻿using ViewBindings.SourceGenerator.Attributes;
 
 namespace ViewBindings.SourceGenerator.Demo.ViewModels;
 

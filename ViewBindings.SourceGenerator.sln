@@ -5,8 +5,6 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewBindings.SourceGenerator.Demo", "ViewBindings.SourceGenerator.Demo\ViewBindings.SourceGenerator.Demo.csproj", "{9B090233-6174-4A3A-94D3-758763F4E7BA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewBindings.SourceGenerator.Contracts", "ViewBindings.SourceGenerator.Contracts\ViewBindings.SourceGenerator.Contracts.csproj", "{A766795F-3622-4ABE-A552-74464B0AF030}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewBindings.SourceGenerator", "ViewBindings.SourceGenerator\ViewBindings.SourceGenerator.csproj", "{1615FF7E-DAB9-401C-9322-C132F9F2320F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C95038C1-5DCB-4B25-8C06-7C656C07D770}"
@@ -27,10 +25,6 @@ Global
 		{9B090233-6174-4A3A-94D3-758763F4E7BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B090233-6174-4A3A-94D3-758763F4E7BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B090233-6174-4A3A-94D3-758763F4E7BA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A766795F-3622-4ABE-A552-74464B0AF030}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A766795F-3622-4ABE-A552-74464B0AF030}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A766795F-3622-4ABE-A552-74464B0AF030}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A766795F-3622-4ABE-A552-74464B0AF030}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1615FF7E-DAB9-401C-9322-C132F9F2320F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1615FF7E-DAB9-401C-9322-C132F9F2320F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1615FF7E-DAB9-401C-9322-C132F9F2320F}.Release|Any CPU.ActiveCfg = Release|Any CPU

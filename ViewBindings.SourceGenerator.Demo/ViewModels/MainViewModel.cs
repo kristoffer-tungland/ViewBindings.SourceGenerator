@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using ViewBindings.SourceGenerator.Attributes;
+using ViewBindings.SourceGenerator.Contracts.Attributes;
 
 namespace ViewBindings.SourceGenerator.Demo.ViewModels;
 

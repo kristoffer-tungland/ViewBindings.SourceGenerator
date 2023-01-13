@@ -18,6 +18,7 @@
 
   <!-- Add  👇 a reference to the generator project  -->
   <ItemGroup>
+    <ProjectReference Include="..\ViewBindings.SourceGenerator.Contracts\ViewBindings.SourceGenerator.Contracts.csproj" />
     <ProjectReference Include="..\ViewBindings.SourceGenerator\ViewBindings.SourceGenerator.csproj" />
   </ItemGroup>
 

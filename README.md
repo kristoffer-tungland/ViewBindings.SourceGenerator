@@ -5,7 +5,7 @@ The ViewBinding.SourceGenerator allows you to bind view models to views within a
 To bind a view model to a view, add the ```[ViewBinding]``` attribute to the view model, specifying the view type as a named argument. If no view type is provided, the attribute will search for the first view with a matching name based on a predetermined naming convention.
 
 ```csharp
-using ViewBindings.SourceGenerator.Attributes;
+using ViewBindings.SourceGenerator.Contracts.Attributes;
 
 namespace ViewBindings.SourceGenerator.Demo.ViewModels;
 
@@ -31,7 +31,7 @@ public class GeneratedViewBindings : ResourceDictionary
 {
     public GeneratedViewBindings()
     {
-        AddDataTemplate(typeof(ViewBindings.SourceGenerator.Demo.ViewModels.ViewModel), typeof(ViewBindings.SourceGenerator.Demo.Views.View));
+        AddDataTemplate(typeof(global::ViewBindings.SourceGenerator.Demo.ViewModels.ViewModel), typeof(global::ViewBindings.SourceGenerator.Demo.Views.View));
     }
 
     void AddDataTemplate(Type viewModel, Type view)
@@ -92,7 +92,7 @@ To use the ```GeneratedViewBindings``` calss, simply put it in ``` App.xaml ```
 If you choose not to use the predefined naming convention, you can specify the view to use by setting ```ViewType``` to the type of the desired view (e.g. ```typeof(View)```). This will result in the same ```GeneratedViewBindings``` as in the example above.
 
  ```csharp
-using ViewBindings.SourceGenerator.Attributes;
+using ViewBindings.SourceGenerator.Contracts.Attributes;
 using ViewBindings.SourceGenerator.Demo.Views;
 
 namespace ViewBindings.SourceGenerator.Demo.ViewModels;

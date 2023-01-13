@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
-using ViewBindings.SourceGenerator.Attributes;
+using ViewBindings.SourceGenerator.Contracts.Attributes;
 using ViewBindings.SourceGenerator.Exceptions;
 using ViewBindings.SourceGenerator.Extensions;
 
@@ -20,14 +20,10 @@ public class ViewBindingsSourceGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        // Add the marker attribute
-        context.RegisterPostInitializationOutput(ctx => ctx.AddSource(
-            "GeneratedViewBindingAttribute.g.cs",
-            SourceText.From(SourceGenerationHelper.Attribute, Encoding.UTF8)));
-
-
-
-        // Do a simple filter for enums
+#if DEBUG
+        //Debugger.Launch();
+#endif
+        // Do a simple filter for viewModels
         IncrementalValuesProvider<ClassDeclarationSyntax> viewModelDeclarations = context.SyntaxProvider
             .CreateSyntaxProvider(
                 predicate: static (s, _) => IsSyntaxTargetForGeneration(s), // select enums with attributes
@@ -67,7 +63,7 @@ public class ViewBindingsSourceGenerator : IIncrementalGenerator
                 var fullName = attributeContainingTypeSymbol.ToDisplayString();
 
                 // Is the attribute the [ViewBindingAttribute] attribute?
-                if (fullName == "ViewBindings.SourceGenerator.Attributes.ViewBindingAttribute")
+                if (fullName == "ViewBindings.SourceGenerator.Contracts.Attributes.ViewBindingAttribute")
                 {
                     // return the enum
                     return classDeclarationSyntax;
@@ -336,7 +332,7 @@ public class ViewBindingsSourceGenerator : IIncrementalGenerator
 
     static string GetNameAndContainingTypesAndNamespaces(ISymbol symbol)
     {
-        return symbol.ToDisplayString(new SymbolDisplayFormat(typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces));
+        return "global::" + symbol.ToDisplayString(new SymbolDisplayFormat(typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces));
     }
 
     static GenerateViewBindingArgs CreateViewBindingsArgs(Compilation compilation, IEnumerable<ClassDeclarationSyntax> viewModels, CancellationToken cancellationToken)

@@ -45,7 +45,7 @@ jobs:
     
     - name: Push Package to NuGet.org
       run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}} -SkipDuplicate
-    
+
     - id: "release"
       name: "Automatic Release"
       uses: "marvinpinto/action-automatic-releases@latest"

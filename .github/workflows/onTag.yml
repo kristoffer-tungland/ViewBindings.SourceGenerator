@@ -24,12 +24,14 @@ jobs:
     - name: Authenticate nuget feed
       run: dotnet nuget add source --username kristoffer-tungland --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/kristoffer-tungland/index.json"
     
-    - uses: "marvinpinto/action-automatic-releases@latest"
+    - id: "release"
+      name: "Automatic Release"
+      uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: "latest"
         prerelease: false
-        title: "Development Build"
+        title: "Release"
         files: |
           LICENSE.txt
           README.md

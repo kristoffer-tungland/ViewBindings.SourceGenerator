@@ -9,8 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ViewBindings.SourceGenerator.Contracts\ViewBindings.SourceGenerator.Contracts.csproj" />
-    <ProjectReference Include="..\ViewBindings.SourceGenerator\ViewBindings.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <!-- Rererence the source generator project -->
+    <ProjectReference Include="..\ViewBindings.SourceGenerator\ViewBindings.SourceGenerator.csproj" OutputItemType="Analyzer" 
+                      ReferenceOutputAssembly="false" /> <!-- Don't reference the generator dll -->
+
+    <!-- Rererence the attributes project "treat as an analyzer"-->
+    <ProjectReference Include="..\ViewBindings.SourceGenerator.Contracts\ViewBindings.SourceGenerator.Contracts.csproj" OutputItemType="Analyzer" 
+                      ReferenceOutputAssembly="true" /> <!-- We DO reference the attributes dll -->
   </ItemGroup>
 
 </Project>

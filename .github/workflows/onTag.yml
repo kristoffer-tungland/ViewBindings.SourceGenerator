@@ -4,8 +4,10 @@
 name: .NET
 
 on:
-  pull_request:
+  push:
     branches: [ "master" ]
+    tags:
+      - "v*"
 
 jobs:
   build:
@@ -22,13 +24,11 @@ jobs:
     - name: Authenticate nuget feed
       run: dotnet nuget add source --username kristoffer-tungland --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/kristoffer-tungland/index.json"
     
-    - id: "release"
-      name: "Automatic Release"
-      uses: "marvinpinto/action-automatic-releases@latest"
+    - uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: "latest"
-        prerelease: true
+        prerelease: false
         title: "Development Build"
         files: |
           LICENSE.txt
@@ -38,10 +38,13 @@ jobs:
       run: dotnet restore
     
     - name: Build
-      run: dotnet build --no-restore --configuration Release -p:Version=${{ steps.release.outputs.AUTOMATIC_RELEASES_TAG }}
+      run: dotnet build --no-restore --configuration Release -p:Version=$AUTOMATIC_RELEASES_TAG
     
     - name: Test
       run: dotnet test --no-build --verbosity normal --configuration Release
-
+    
+    - name: Push Package to NuGet.org
+      run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}} -SkipDuplicate
+    
     - name: Push Package to GitHub
       run: nuget push **\*.nupkg -Source github -SkipDuplicate

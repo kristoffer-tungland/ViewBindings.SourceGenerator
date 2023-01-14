@@ -1,6 +1,12 @@
 ﻿# ViewBinding.SourceGenerator
 The ViewBinding.SourceGenerator allows you to bind view models to views within a generated ResourceDictionary. 
 
+## Installation
+For projects that support PackageReference, copy this XML node into the project file to reference the package.
+```xml
+<PackageReference Include="ViewBindings.SourceGenerator" Version="0.1.0" PrivateAssets="all" ExcludeAssets="runtime" />
+```
+
 ## Usage
 To bind a view model to a view, add the ```[ViewBinding]``` attribute to the view model, specifying the view type as a named argument. If no view type is provided, the attribute will search for the first view with a matching name based on a predetermined naming convention.
 
@@ -31,7 +37,7 @@ public class GeneratedViewBindings : ResourceDictionary
 {
     public GeneratedViewBindings()
     {
-        AddDataTemplate(typeof(ViewBindings.SourceGenerator.Demo.ViewModels.ViewModel), typeof(ViewBindings.SourceGenerator.Demo.Views.View));
+        AddDataTemplate(typeof(global::ViewBindings.SourceGenerator.Demo.ViewModels.ViewModel), typeof(global::ViewBindings.SourceGenerator.Demo.Views.View));
     }
 
     void AddDataTemplate(Type viewModel, Type view)

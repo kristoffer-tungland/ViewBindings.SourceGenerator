@@ -11,7 +11,7 @@ public class GeneratedViewBindings : ResourceDictionary
 {
     public GeneratedViewBindings()
     {
-        AddDataTemplate(typeof(ViewBindings.SourceGenerator.Demo.ViewModels.SecondViewModel), typeof(ViewBindings.SourceGenerator.Demo.Views.SecondView));
+        AddDataTemplate(typeof(global::ViewBindings.SourceGenerator.Demo.ViewModels.SecondViewModel), typeof(global::ViewBindings.SourceGenerator.Demo.Views.SecondView));
     }
 
     void AddDataTemplate(Type viewModel, Type view)

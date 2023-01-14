@@ -13,7 +13,18 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Application Version
+      id: version
+      uses: paulhatch/semantic-version@v5.0.2
+      with:
+        tag_prefix: "v"
+        version_format: "${major}.${minor}.${patch}-prerelease${increment}"
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
@@ -31,7 +42,7 @@ jobs:
       run: dotnet restore
     
     - name: Build
-      run: dotnet build --no-restore --configuration Release -p:Version=${{ env.release_tag }}-${{ github.event.head_commit.id }}
+      run: dotnet build --no-restore --configuration Release -p:Version=${{ steps.version.outputs.version }}
     
     - name: Test
       run: dotnet test --no-build --verbosity normal --configuration Release

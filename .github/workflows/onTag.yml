@@ -4,8 +4,10 @@
 name: .NET
 
 on:
-  pull_request:
+  push:
     branches: [ "master" ]
+    tags:
+      - "v*"
 
 jobs:
   build:
@@ -26,7 +28,7 @@ jobs:
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: "latest"
-        prerelease: true
+        prerelease: false
         title: "Development Build"
         files: |
           LICENSE.txt
@@ -40,6 +42,9 @@ jobs:
     
     - name: Test
       run: dotnet test --no-build --verbosity normal --configuration Release
-
+    
+    - name: Push Package to NuGet.org
+      run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}} -SkipDuplicate
+    
     - name: Push Package to GitHub
       run: nuget push **\*.nupkg -Source github -SkipDuplicate

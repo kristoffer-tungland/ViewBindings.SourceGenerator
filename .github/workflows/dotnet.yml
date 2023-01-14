@@ -32,11 +32,6 @@ jobs:
     
     - name: Authenticate nuget feed
       run: dotnet nuget add source --username kristoffer-tungland --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/kristoffer-tungland/index.json"
-    
-    - name: Generate release tag
-      uses: amitsingh-007/next-release-tag@v1.0.0
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Restore dependencies
       run: dotnet restore

@@ -88,7 +88,7 @@ public class ViewBindingsSourceGenerator : IIncrementalGenerator
 
         try
         {
-            var generateViewBindingArgs = CreateViewBindingsArgs(compilation, distinctViewModels, context.CancellationToken);
+            var generateViewBindingArgs = CreateViewBindingsArgs(compilation, distinctViewModels);
 
             var source = GenerateViewBindingResources(generateViewBindingArgs, context.CancellationToken);
             var sourceText = source.ToFullString();
@@ -335,7 +335,7 @@ public class ViewBindingsSourceGenerator : IIncrementalGenerator
         return "global::" + symbol.ToDisplayString(new SymbolDisplayFormat(typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces));
     }
 
-    static GenerateViewBindingArgs CreateViewBindingsArgs(Compilation compilation, IEnumerable<ClassDeclarationSyntax> viewModels, CancellationToken cancellationToken)
+    static GenerateViewBindingArgs CreateViewBindingsArgs(Compilation compilation, IEnumerable<ClassDeclarationSyntax> viewModels)
     {
 
         string? shortestNamespace = null;

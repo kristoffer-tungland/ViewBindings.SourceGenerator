@@ -4,7 +4,17 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Nullable>enable</Nullable>
     <LangVersion>11</LangVersion>
-    <IsPackable>false</IsPackable>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Version>0.0.4</Version>
+    <Authors>Kristoffer Tungland</Authors>
+    <Company>COWI</Company>
+    <PackageDescription>Contains attriubutes to use with ViewBindings.SourceGenerator</PackageDescription>
+    <RepositoryUrl>https://github.com/kristoffer-tungland/ViewBindings.SourceGenerator</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <!-- Generates a package at build -->
   </PropertyGroup>
 
 </Project>

@@ -339,7 +339,18 @@ public class ViewBindingsSourceGenerator : IIncrementalGenerator
     {
 
         string? shortestNamespace = null;
-        var views = new List<ClassDeclarationSyntax>();
+        string? namespaceOverride = null;
+        var views = new List<ClassDeclarationSyntax>();        foreach (var attributeData in compilation.Assembly.GetAttributes())
+        {
+            var fullName = attributeData.AttributeClass?.ToDisplayString();
+            if (fullName == "ViewBindings.SourceGenerator.Contracts.Attributes.ViewBindingsNamespaceAttribute" &&
+                attributeData.ConstructorArguments.Length == 1 &&
+                attributeData.ConstructorArguments[0].Value is string ns)
+            {
+                namespaceOverride = ns;
+                break;
+            }
+        }
 
         foreach (var syntaxTree in compilation.SyntaxTrees)
         {
@@ -366,6 +377,6 @@ public class ViewBindingsSourceGenerator : IIncrementalGenerator
             }
         }
 
-        return new GenerateViewBindingArgs(compilation, shortestNamespace, viewModels, views);
+        return new GenerateViewBindingArgs(compilation, shortestNamespace, viewModels, views, namespaceOverride);
     }
 }

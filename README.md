@@ -108,6 +108,18 @@ namespace ViewBindings.SourceGenerator.Demo.ViewModels;
 [ViewBinding(ViewType = typeof(View))]
 public class ViewModel : ViewModelBase
 {
-	
+
 }
 ```
+
+## Specify namespace for generated code
+If you want the generated `GeneratedViewBindings` class to use a custom namespace,
+decorate your assembly with the `ViewBindingsNamespace` attribute:
+
+```csharp
+using ViewBindings.SourceGenerator.Contracts.Attributes;
+
+[assembly: ViewBindingsNamespace("Your.Custom.Namespace")]
+```
+
+The generator will prefer this namespace over the default `<project namespace>.Resources` value.

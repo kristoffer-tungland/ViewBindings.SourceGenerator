@@ -340,13 +340,12 @@ public class ViewBindingsSourceGenerator : IIncrementalGenerator
 
         string? shortestNamespace = null;
         string? namespaceOverride = null;
-        var views = new List<ClassDeclarationSyntax>();
-
-        foreach (var attributeData in compilation.Assembly.GetAttributes())
+        var views = new List<ClassDeclarationSyntax>();        foreach (var attributeData in compilation.Assembly.GetAttributes())
         {
             var fullName = attributeData.AttributeClass?.ToDisplayString();
             if (fullName == "ViewBindings.SourceGenerator.Contracts.Attributes.ViewBindingsNamespaceAttribute" &&
-                attributeData.ConstructorArguments is [{ Value: string ns }])
+                attributeData.ConstructorArguments.Length == 1 &&
+                attributeData.ConstructorArguments[0].Value is string ns)
             {
                 namespaceOverride = ns;
                 break;

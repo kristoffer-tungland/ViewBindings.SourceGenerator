@@ -60,4 +60,5 @@ jobs:
           **\*.nupkg
 
     - name: Push Package to GitHub
-      run: nuget push **\*.nupkg -Source github -SkipDuplicate
+      run: nuget push **\*.nupkg --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+          --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate -SkipDuplicate

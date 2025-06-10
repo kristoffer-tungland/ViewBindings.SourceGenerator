@@ -144,4 +144,32 @@ namespace ViewBindings.SourceGenerator.Demo.Views
 
         return TestHelper.Verify(viewModel, view);
     }
+
+    [Fact]
+    public Task NamespaceOverride()
+    {
+        const string viewModel = """
+using ViewBindings.SourceGenerator.Contracts.Attributes;
+using ViewBindings.SourceGenerator.Demo.Views;
+
+[assembly: ViewBindingsNamespace("Custom.Namespace")]
+
+namespace ViewBindings.SourceGenerator.Demo.ViewModels;
+
+[ViewBinding]
+public class FirstViewModel
+{
+}
+""";
+        const string view = """
+namespace ViewBindings.SourceGenerator.Demo.Views
+{
+    public class FirstView
+    {
+    }
+}
+""";
+
+        return TestHelper.Verify(viewModel, view);
+    }
 }

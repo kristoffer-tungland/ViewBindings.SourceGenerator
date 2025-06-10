@@ -13,13 +13,15 @@ internal class GenerateViewBindingArgs
     public List<ClassDeclarationSyntax> Views { get; }
     public string Namespace { get; }
 
-    public GenerateViewBindingArgs(Compilation compilation, string? shortestNamespace, IEnumerable<ClassDeclarationSyntax> viewModels, List<ClassDeclarationSyntax> views)
+    public GenerateViewBindingArgs(Compilation compilation, string? shortestNamespace, IEnumerable<ClassDeclarationSyntax> viewModels, List<ClassDeclarationSyntax> views, string? namespaceOverride)
     {
         Compilation = compilation;
         ViewModels = viewModels;
         Views = views;
 
-        if (shortestNamespace is null)
+        if (!string.IsNullOrWhiteSpace(namespaceOverride))
+            Namespace = namespaceOverride!;
+        else if (shortestNamespace is null)
             Namespace = "Resources";
         else
             Namespace = shortestNamespace + ".Resources";

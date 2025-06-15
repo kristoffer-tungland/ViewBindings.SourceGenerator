@@ -60,6 +60,32 @@ namespace ViewBindings.SourceGenerator.Demo.Views
     }
 
     [Fact]
+    public Task ViewTypeConstructor()
+    {
+        const string viewModel = """
+using ViewBindings.SourceGenerator.Contracts.Attributes;
+using ViewBindings.SourceGenerator.Demo.Views;
+
+namespace ViewBindings.SourceGenerator.Demo.ViewModels;
+
+[ViewBinding(typeof(FirstView))]
+public class FirstViewModel
+{
+}
+""";
+        const string view = """
+namespace ViewBindings.SourceGenerator.Demo.Views
+{
+    public class FirstView
+    {
+    }
+}
+""";
+
+        return TestHelper.Verify(viewModel, view);
+    }
+
+    [Fact]
     public Task NoAttribute()
     {
         const string viewModel = """

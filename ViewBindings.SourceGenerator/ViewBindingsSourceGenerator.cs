@@ -280,8 +280,16 @@ public class ViewBindingsSourceGenerator : IIncrementalGenerator
             INamedTypeSymbol? viewTypeSymbol = null;
             var namedArguments = attribute.NamedArguments;
 
-            // Check if the view is specified on argument
-            if (!namedArguments.IsEmpty && namedArguments.FirstOrDefault(arg =>
+            // Check if the view is specified as a constructor argument
+            if (attribute.ConstructorArguments.Length == 1)
+            {
+                var constructorArg = attribute.ConstructorArguments[0];
+                if (constructorArg.Kind != TypedConstantKind.Error)
+                    viewTypeSymbol = constructorArg.Value as INamedTypeSymbol;
+            }
+
+            // Check if the view is specified on a named argument
+            if (viewTypeSymbol is null && !namedArguments.IsEmpty && namedArguments.FirstOrDefault(arg =>
                     arg.Key == nameof(ViewBindingAttribute.ViewType)) is { } viewTypeArgument)
             {
                 if (viewTypeArgument.Value.Kind != TypedConstantKind.Error)

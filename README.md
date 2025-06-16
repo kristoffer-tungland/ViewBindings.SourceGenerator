@@ -97,15 +97,15 @@ To use the ```GeneratedViewBindings``` calss, simply put it in ``` App.xaml ```
 </Application>
 ```
 ## Specify view type
-If you choose not to use the predefined naming convention, you can specify the view to use by setting ```ViewType``` to the type of the desired view (e.g. ```typeof(View)```). This will result in the same ```GeneratedViewBindings``` as in the example above.
+If you choose not to use the predefined naming convention, you can specify the view to use either by passing the view type to the attribute constructor or by setting the ```ViewType``` property. Both options result in the same ```GeneratedViewBindings``` as in the example above.
 
- ```csharp
+```csharp
 using ViewBindings.SourceGenerator.Contracts.Attributes;
 using ViewBindings.SourceGenerator.Demo.Views;
 
 namespace ViewBindings.SourceGenerator.Demo.ViewModels;
 
-[ViewBinding(ViewType = typeof(View))]
+[ViewBinding(typeof(View))]
 public class ViewModel : ViewModelBase
 {
 
